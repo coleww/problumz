@@ -1,5 +1,5 @@
 var yarray = require('yarray')
-var createContainer = require('../create_container')
+var createContainer = require('./create_container')
 
 var SequenceEditor = function(data){
   if(!data) data = {}

@@ -1,46 +1,30 @@
 var data = {
-  instruments: [
+  sequences: [
     {
-      name: 'clap',
-      type: 'drum'
+      melodic: false
     },
     {
-      name: 'cym',
-      type: 'drum'
+      melodic: false
     },
     {
-      name: 'hat',
-      type: 'drum'
+      melodic: false
     },
     {
-      name: 'snare',
-      type: 'drum'
+      melodic: true
     },
     {
-      name: 'kick',
-      type: 'drum'
-    },
-    {
-      name: 'tri',
-      type: 'triangle'
-    },
-    {
-      name: 'sin',
-      type: 'sine'
+      melodic: true
     }
   ],
   key: {
     tonic: 'C3',
     scale: 'major'
   },
-  bpm: 120,
-  steps: 16
+  bpm: 120//,
+  // steps: 16
 };
 
-var UI = require('./src/UI');
-var updateInstrumentUI = UI.updateInstrumentUI;
-var createUI = UI.createUI;
+var Editor = require('./src/editor')
+var editor = new Editor(data)
 
-var Sequencer = require('./src/sequencer');
-var seq = new Sequencer(data, updateInstrumentUI);
-createUI(seq);
+document.body.appendChild(editor.el)
