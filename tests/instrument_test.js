@@ -65,7 +65,26 @@ tap.test('instrument exports data', function(t){
   t.deepEqual(inst.export(), expected)
 })
 
-// tap.test('instrument imports/loads data', function(t){
-//   t.plan(0)
-//   var inst = new Instrument()
-// })
+tap.test('instrument imports data', function(t){
+  t.plan(6)
+
+  var inst = new Instrument()
+  var data = {
+    probs: [[0.5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]],
+    notes: [[[0,-1],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0]], [[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0,1]]],
+    nexts: [[0,1], [1]],
+    current: 1,
+    melodic: true
+  }
+  inst.import(data)
+
+  t.equal(inst.el.querySelectorAll('.probs input')[15].value, '1', 'probs loaded')
+  t.equal(inst.el.querySelectorAll('.notes input')[15].value, '0,1', 'notes loaded')
+  t.equal(inst.el.querySelector('input.nexts').value, '1', 'nexts loaded')
+
+  triggerChange(inst.el.querySelector('select'), '0')
+
+  t.equal(inst.el.querySelector('.probs input').value, '0.5', 'other probs loaded')
+  t.equal(inst.el.querySelector('.notes input').value, '0,-1', 'other notes loaded')
+  t.equal(inst.el.querySelector('input.nexts').value, '0,1', 'other nexts loaded')
+})

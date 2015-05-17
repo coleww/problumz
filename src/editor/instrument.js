@@ -12,8 +12,26 @@ var Instrument = function(data){
   this.createElement()
 }
 
-Instrument.prototype.update = function(){
+Instrument.prototype.import = function(data){
+  var newData = {}
+  newData.probs = data.probs.map(function(p){
+    return p.map(function(e){
+      return e+''
+    })
+  })
+  newData.notes = data.notes.map(function(p){
+    return p.map(function(s){
+      return s.join(",")
+    })
+  })
+  newData.nexts = data.nexts.map(function(p){
+    return [p.join(",")]
+  })
+  newData.current = data.current+''
+  newData.melodic = data.melodic
+  this.data = newData
 
+  this.updateCurrent(this.data.current)
 }
 
 Instrument.prototype.export = function(){
