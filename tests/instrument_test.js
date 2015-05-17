@@ -42,11 +42,30 @@ tap.test('instrument keeps data updated', function(t){
 
 
 tap.test('instrument exports data', function(t){
-  t.plan(0)
+  t.plan(1)
   var inst = new Instrument()
+
+  triggerChange(inst.el.querySelector('.probs input'), '0.5')
+  triggerChange(inst.el.querySelector('.notes input'), '0,-1')
+  triggerChange(inst.el.querySelector('input.nexts'), '0,1')
+  inst.el.querySelector('button').click()
+  triggerChange(inst.el.querySelector('select'), '1')
+
+  triggerChange(inst.el.querySelectorAll('.probs input')[15], '1')
+  triggerChange(inst.el.querySelectorAll('.notes input')[15], '0,1')
+
+  var expected = {
+    probs: [[0.5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]],
+    notes: [[[0,-1],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0]], [[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0,1]]],
+    nexts: [[0,1], [1]],
+    current: 1,
+    melodic: true
+  }
+
+  t.deepEqual(inst.export(), expected)
 })
 
-tap.test('instrument imports/loads data', function(t){
-  t.plan(0)
-  var inst = new Instrument()
-})
+// tap.test('instrument imports/loads data', function(t){
+//   t.plan(0)
+//   var inst = new Instrument()
+// })

@@ -17,9 +17,27 @@ Instrument.prototype.update = function(){
 }
 
 Instrument.prototype.export = function(){
-
+  var data = {}
+  data.probs = this.data.probs.map(function(p){
+    return p.map(function(e){
+      return +e
+    })
+  })
+  data.notes = this.data.notes.map(function(p){
+    return p.map(function(s){
+      return s.replace(' ', '').split(",").map(function(e){
+        return +e
+      })
+    })
+  })
+  data.nexts = this.data.nexts.map(function(p){
+    return p[0].replace(' ', '').split(",").map(function(e){
+      return +e
+    })
+  })
+  data.current = +this.data.current
+  data.melodic = this.data.melodic
   return data
-  // return this.data?
 }
 
 Instrument.prototype.createElement = function(){
