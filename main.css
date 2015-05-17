@@ -1,41 +1,28 @@
 
-.prob {
+.probs input {
   width: 20px;
   margin: 0 10px 0 10px;
   height: 20px;
 }
 
-.notes {
+.notes input {
   width: 40px;
   height: 20px;
+  float: left;
 }
 
-.label {
-  display: inline-block;
-  text-align: center;
+.controls {
+  float: left;
+}
+
+input.nexts {
   width: 60px;
-}
-
-.synth-probs {
-  display: inline-block;
+  height: 20px;
+  margin-left: 3px;
 }
 
 input {
   border: 1px solid black;
-}
-
-.bpm-slider {
-  float: left;
-  margin-right: 15px;
-}
-
-.key-select {
-  float: left;
-  margin-right: 15px;
-}
-
-.one-beat {
-  background-color: lightgray;
 }
 
 .cf {

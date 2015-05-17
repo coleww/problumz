@@ -4,7 +4,7 @@ var Instrument = function(data){
   this.data = data || {
     probs: [['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0']],
     notes: [['','','','','','','','','','','','','','','','']],
-    nexts: [['']],
+    nexts: [['0']],
     current: 0,
     melodic: true
   }
@@ -83,10 +83,13 @@ Instrument.prototype.createElement = function(){
     container.appendChild(notes)
   }
 
+  var controls = createContainer('controls')
   boundNexts.els[0].setAttribute('class', 'nexts')
-  container.appendChild(boundNexts.els[0])
-  container.appendChild(this.createCurrentSelect())
-  container.appendChild(this.createAddButton())
+  controls.appendChild(boundNexts.els[0])
+  controls.appendChild(this.createCurrentSelect())
+  controls.appendChild(this.createAddButton())
+  container.appendChild(controls)
+
   this.el = container;
 }
 
