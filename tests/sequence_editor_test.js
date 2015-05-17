@@ -88,3 +88,9 @@ tap.test('editor imports data', function(t){
   t.equal(editor.el.querySelector('.notes input').value, '0,-1', 'other notes loaded')
   t.equal(editor.el.querySelector('input.nexts').value, '0,1', 'other nexts loaded')
 })
+
+tap.test('editor loads partial data', function(t){
+  t.plan(1)
+  var editor = new SequenceEditor({melodic: false})
+  t.ok(!editor.el.querySelector('.notes input'), 'does not add note inputs for non-melodic inst')
+})

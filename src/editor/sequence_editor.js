@@ -1,12 +1,13 @@
 var yarray = require('yarray')
 
 var SequenceEditor = function(data){
-  this.data = data || {
-    probs: [['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0']],
-    notes: [['','','','','','','','','','','','','','','','']],
-    nexts: [['0']],
-    current: 0,
-    melodic: true
+  if(!data) data = {}
+  this.data = {
+    probs: data.probs || [['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0']],
+    notes: data.notes || [['','','','','','','','','','','','','','','','']],
+    nexts: data.nexts || [['0']],
+    current: data.current === undefined ? 0 : data.current,
+    melodic: data.melodic === undefined ? true : data.melodic
   }
   this.el = null
   this.createElement()
