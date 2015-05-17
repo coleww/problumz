@@ -1,4 +1,5 @@
 var yarray = require('yarray')
+var createContainer = require('../create_container')
 
 var SequenceEditor = function(data){
   if(!data) data = {}
@@ -92,12 +93,6 @@ SequenceEditor.prototype.createElement = function(){
   container.appendChild(controls)
 
   this.el = container;
-}
-
-function createContainer(className){
-  var container = document.createElement('div')
-  container.setAttribute('class', className)
-  return container
 }
 
 SequenceEditor.prototype.createCurrentSelect = function(){
