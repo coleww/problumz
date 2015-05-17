@@ -1,1 +1,1 @@
-require('./tests/instrument_test.js')
+require('./tests/sequence_editor_test.js')

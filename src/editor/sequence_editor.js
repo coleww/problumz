@@ -1,6 +1,6 @@
 var yarray = require('yarray')
 
-var Instrument = function(data){
+var SequenceEditor = function(data){
   this.data = data || {
     probs: [['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0']],
     notes: [['','','','','','','','','','','','','','','','']],
@@ -12,7 +12,7 @@ var Instrument = function(data){
   this.createElement()
 }
 
-Instrument.prototype.import = function(data){
+SequenceEditor.prototype.import = function(data){
   var newData = {}
   newData.probs = data.probs.map(function(p){
     return p.map(function(e){
@@ -34,7 +34,7 @@ Instrument.prototype.import = function(data){
   this.updateCurrent(this.data.current)
 }
 
-Instrument.prototype.export = function(){
+SequenceEditor.prototype.export = function(){
   var data = {}
   data.probs = this.data.probs.map(function(p){
     return p.map(function(e){
@@ -58,7 +58,7 @@ Instrument.prototype.export = function(){
   return data
 }
 
-Instrument.prototype.createElement = function(){
+SequenceEditor.prototype.createElement = function(){
   var boundProbs = yarray(this.data.probs[this.data.current])
   if(this.data.melodic) var boundNotes = yarray(this.data.notes[this.data.current])
   var boundNexts = yarray(this.data.nexts[this.data.current])
@@ -99,7 +99,7 @@ function createContainer(className){
   return container
 }
 
-Instrument.prototype.createCurrentSelect = function(){
+SequenceEditor.prototype.createCurrentSelect = function(){
   var select = document.createElement('select')
   var that = this
   select.addEventListener('change', function updateSelect(e){
@@ -111,14 +111,14 @@ Instrument.prototype.createCurrentSelect = function(){
   return select
 }
 
-Instrument.prototype.updateCurrent = function(current){
+SequenceEditor.prototype.updateCurrent = function(current){
   this.data.current = current
   this.updateProbs(this.data.probs[this.data.current])
   if(this.data.melodic) this.updateNotes(this.data.notes[this.data.current])
   this.updateNexts(this.data.nexts[this.data.current])
 }
 
-Instrument.prototype.createAddButton = function(){
+SequenceEditor.prototype.createAddButton = function(){
   var button = document.createElement('button')
   button.textContent = '+'
   var that = this
@@ -129,7 +129,7 @@ Instrument.prototype.createAddButton = function(){
   return button
 }
 
-Instrument.prototype.addPattern = function(){
+SequenceEditor.prototype.addPattern = function(){
   this.data.probs.push(['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'])
   if(this.data.melodic) this.data.notes.push(['','','','','','','','','','','','','','','',''])
   var newIdx = this.data.probs.length - 1 + ''
@@ -139,4 +139,4 @@ Instrument.prototype.addPattern = function(){
   this.el.querySelector('select').appendChild(opt)
 }
 
-module.exports = Instrument
+module.exports = SequenceEditor

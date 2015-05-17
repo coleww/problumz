@@ -1,4 +1,5 @@
-var Instrument = require('./editor/instrument')
+var Instrument = require('./editor/sequencer_editor')
+
 module.exports = function(data){
 
 }
