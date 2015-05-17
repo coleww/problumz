@@ -8,11 +8,9 @@
 .notes input {
   width: 40px;
   height: 20px;
-  float: left;
 }
 
 .controls {
-  float: left;
 }
 
 input.nexts {
