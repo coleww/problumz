@@ -1,4 +1,4 @@
-# PROBLUMZ
+# PROBZ
 
 :notes: [a probabilistic audio sequencer](http://coleww.github.io/problumz/) :speaker:
 
@@ -28,3 +28,17 @@ npm run test
 
 ```
 
+
+
+EDITOR |=>| AUDIO THINGS
+
+
+{sequences: [{melodic: true, etc..}, {melodic: false}], bpm: 120, key: {tonic: 'C4', scale: 'Major'}}
+
+
+should be able to fiddle with audio params while thing plays.
+
+should not be able to fiddle with sequence while thing plays.
+
+
+instrument is audioNode + el, kinda like seqEditor is an el and itself...

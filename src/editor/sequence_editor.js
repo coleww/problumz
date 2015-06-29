@@ -2,19 +2,20 @@ var yarray = require('yarray')
 var createContainer = require('./create_container')
 
 var SequenceEditor = function(data){
-  if(!data) data = {}
-  this.data = {
-    probs: data.probs || [['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0']],
-    notes: data.notes || [['','','','','','','','','','','','','','','','']],
-    nexts: data.nexts || [['0']],
-    current: data.current === undefined ? 0 : data.current,
-    melodic: data.melodic === undefined ? true : data.melodic
-  }
+  this.data = null
   this.el = null
+  this.import(data || {})
   this.createElement()
 }
 
-SequenceEditor.prototype.import = function(data){
+SequenceEditor.prototype.import = function(_data){
+  var data = {
+    probs: _data.probs || [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]],
+    notes: _data.notes || [[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]],
+    nexts: _data.nexts || [[0]],
+    current: _data.current === undefined ? 0 : _data.current,
+    melodic: _data.melodic === undefined ? true : _data.melodic
+  }
   var newData = {}
   newData.probs = data.probs.map(function(p){
     return p.map(function(e){
@@ -32,6 +33,10 @@ SequenceEditor.prototype.import = function(data){
   newData.current = data.current+''
   newData.melodic = data.melodic
   this.data = newData
+
+  if(!this.boundProbs){
+    this.bindData()
+  }
 
   this.updateCurrent(this.data.current)
 }
@@ -61,33 +66,31 @@ SequenceEditor.prototype.export = function(){
 }
 
 SequenceEditor.prototype.createElement = function(){
-  var boundProbs = yarray(this.data.probs[this.data.current])
-  if(this.data.melodic) var boundNotes = yarray(this.data.notes[this.data.current])
-  var boundNexts = yarray(this.data.nexts[this.data.current])
 
-  this.updateProbs = boundProbs.update
-  if(this.data.melodic) this.updateNotes = boundNotes.update
-  this.updateNexts = boundNexts.update
 
-  var container = createContainer('instrument')
+  // this.updateProbs = boundProbs.update
+  // if(this.data.melodic) this.updateNotes = boundNotes.update
+  // this.updateNexts = boundNexts.update
+
+  var container = createContainer('sequence')
 
   var probs = createContainer('probs')
-  for(var p=0;p<boundProbs.els.length;p++){
-    probs.appendChild(boundProbs.els[p])
+  for(var p = 0; p < this.boundProbs.els.length; p++){
+    probs.appendChild(this.boundProbs.els[p])
   }
   container.appendChild(probs)
 
   if(this.data.melodic) {
     var notes = createContainer('notes')
-    for(var n=0;n<boundNotes.els.length;n++){
-      notes.appendChild(boundNotes.els[n])
+    for(var n = 0; n < this.boundNotes.els.length; n++){
+      notes.appendChild(this.boundNotes.els[n])
     }
     container.appendChild(notes)
   }
 
   var controls = createContainer('controls')
-  boundNexts.els[0].setAttribute('class', 'nexts')
-  controls.appendChild(boundNexts.els[0])
+  this.boundNexts.els[0].setAttribute('class', 'nexts')
+  controls.appendChild(this.boundNexts.els[0])
   controls.appendChild(this.createCurrentSelect())
   controls.appendChild(this.createAddButton())
   container.appendChild(controls)
@@ -109,9 +112,9 @@ SequenceEditor.prototype.createCurrentSelect = function(){
 
 SequenceEditor.prototype.updateCurrent = function(current){
   this.data.current = current
-  this.updateProbs(this.data.probs[this.data.current])
-  if(this.data.melodic) this.updateNotes(this.data.notes[this.data.current])
-  this.updateNexts(this.data.nexts[this.data.current])
+  this.boundProbs.update(this.data.probs[this.data.current])
+  if(this.data.melodic) this.boundNotes.update(this.data.notes[this.data.current])
+  this.boundNexts.update(this.data.nexts[this.data.current])
 }
 
 SequenceEditor.prototype.createAddButton = function(){
@@ -133,6 +136,12 @@ SequenceEditor.prototype.addPattern = function(){
   var opt = document.createElement('option')
   opt.value = opt.textContent = newIdx
   this.el.querySelector('select').appendChild(opt)
+}
+
+SequenceEditor.prototype.bindData = function(){
+  this.boundProbs = yarray(this.data.probs[this.data.current])
+  if(this.data.melodic) this.boundNotes = yarray(this.data.notes[this.data.current])
+  this.boundNexts = yarray(this.data.nexts[this.data.current])
 }
 
 module.exports = SequenceEditor

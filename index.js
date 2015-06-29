@@ -28,3 +28,19 @@ var Editor = require('./src/editor')
 var editor = new Editor(data)
 
 document.body.appendChild(editor.el)
+
+// var instruments = require('./src/instruments')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
